@@ -13,9 +13,13 @@ quarkus:
     metrics:
       enabled:
         true
-    database: fights
+    hosts: ${DB_HOST}
+    database: ${DB_SCHEMA}
+    credentials:
+      username: ${DB_USER}
+      password: ${DB_PWD}
   liquibase-mongodb:
-    migrate-at-start: true
+    migrate-at-start: false
   rest-client:
     hero-client.url: "stork://hero-service"
   stork:
@@ -43,17 +47,6 @@ quarkus:
       otlp:
         traces:
           endpoint: http://localhost:4317
-  datasource:
-    db-kind: postgresql
-    username: ${DB_USER}
-    password: ${DB_PWD}
-    jdbc:
-      url: jdbc:postgresql://${DB_HOST}/${DB_SCHEMA}
-  hibernate-orm:
-    database:
-      generation: 
-        ~: update
-
   smallrye-openapi:
     info-title: Fights API
     info-description: This API performs fights between a Hero and a Villain
@@ -80,6 +73,11 @@ fight:
     client-base-url: stork://villain-service
 mp:
   messaging:
+    connector:
+      smallrye-kafka:
+        apicurio:
+          registry:
+            url: ${APICURIO_URL}
     outgoing:
       fights:
         connector: smallrye-kafka
@@ -87,6 +85,9 @@ mp:
         apicurio:
           registry: 
             auto-register: true
+kafka:
+  bootstrap:
+    servers: ${KAFKA_BOOTSTRAP}
 
 "%dev":
   quarkus:
