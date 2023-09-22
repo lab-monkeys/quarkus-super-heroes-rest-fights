@@ -46,7 +46,7 @@ quarkus:
     exporter:
       otlp:
         traces:
-          endpoint: http://localhost:4317
+          endpoint: ${OTEL_URL}
   smallrye-openapi:
     info-title: Fights API
     info-description: This API performs fights between a Hero and a Villain
