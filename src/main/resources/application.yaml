@@ -21,7 +21,8 @@ quarkus:
   liquibase-mongodb:
     migrate-at-start: false
   rest-client:
-    hero-client.url: "stork://hero-service"
+    hero-client:
+      url: "stork://hero-service"
   stork:
     hero-service:
       service-discovery:
